@@ -9,6 +9,7 @@ const styles = theme => ({
     submit: {
       fontSize:'1.5rem',
       width: 'auto', 
+      marginTop: theme.spacing.unit * 2,
     },
     submitcsv: {
       fontSize:'2rem',
@@ -113,12 +114,37 @@ const styles = theme => ({
 
     // SEARCH BUTTON
     searchroot: {
-      display: 'flex',
-      alignItems: 'center',
-      width: 350,
-      backgroundColor: theme.palette.common.white,
-      marginTop: theme.spacing.unit * 2,
-      marginRight: theme.spacing.unit * 2,
+      [theme.breakpoints.up('md')] : {
+        display: 'flex',
+        alignItems: 'center',
+        width: 350,
+        backgroundColor: theme.palette.common.white,
+        marginTop: theme.spacing.unit * 0,
+        marginRight: theme.spacing.unit * 2,
+      },
+      [theme.breakpoints.up('sm')] : {
+        display: 'flex',
+        alignItems: 'center',
+        width: 350,
+        backgroundColor: theme.palette.common.white,
+        margin: theme.spacing.unit * 2,
+      },
+      [theme.breakpoints.down('sm')] : {
+        display: 'flex',
+        alignItems: 'center',
+        width: 350,
+        backgroundColor: theme.palette.common.white,
+        margin: theme.spacing.unit * 2,
+      },
+      [theme.breakpoints.down('xs')] : {
+        display: 'flex',
+        alignItems: 'center',
+        width: 300,
+        backgroundColor: theme.palette.common.white,
+        margin: theme.spacing.unit * 2,
+      },
+
+
     },
     input: {
       marginLeft: theme.spacing.unit * 2,
@@ -141,6 +167,36 @@ const styles = theme => ({
     csvButton: {
       marginTop: theme.spacing.unit * 2,
     },
+    textField:{
+      [theme.breakpoints.up('md')] : {
+        fontSize:'1.5rem',   
+        color:theme.palette.common.black,
+        margin:'1vh'
+      },
+      [theme.breakpoints.down('sm')] : {
+        fontSize:'1.5rem',   
+        color:theme.palette.common.black,
+        width:400, 
+        margin:'1vh'
+      },
+      [theme.breakpoints.down('xs')] : {
+        fontSize:'1.5rem',   
+        color:theme.palette.common.black,
+        width:300, 
+        margin:'1vh'
+      },
+    },
+    card:{
+      [theme.breakpoints.up('md')] : {
+          height:"63vh"
+      },
+      [theme.breakpoints.down('sm')] : {
+          height:"100%"
+      },
+      [theme.breakpoints.down('xs')] : {
+          height:"100%"
+      }
+    }
   });
 
   export default styles;

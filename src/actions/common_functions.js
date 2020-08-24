@@ -74,8 +74,8 @@ export function ThirtyDaysDate(){
     return new Date(Date.now() - 2592e6).toIsoString().slice(0,10);
 };
 
-export function past14DaysDate(){
-    let dt = new Date(Date.now() - 12096e5),
+export function future14DaysDate(){
+    let dt = new Date(Date.now() + 12096e5),
     y = dt.getFullYear(), 
     m = ('0' + (dt.getMonth() + 1)).slice(-2), 
     d = ('0' +  dt.getDate()).slice(-2);

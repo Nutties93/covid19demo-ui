@@ -24,7 +24,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.dark,
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
   },
   avatar: {

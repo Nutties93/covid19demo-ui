@@ -5,13 +5,13 @@ import client from './rest-module';
 //ACTUAL API: https://iotapiserver.azurewebsites.net/ofserver/oflogin
 export  function userLoginRequest(data) {
 	return dispatch =>{
-		return client().post('/ofserver/oflogin',data);
+		return client().post('/acserver/login',data);
 	};
 };
 
 export function userLogoutRequest(data){
 	return dispatch =>{
-		return client().post('/ofserver/oflogout',data)
+		return client().post('/acserver/logout',data)
 	};
 };
 

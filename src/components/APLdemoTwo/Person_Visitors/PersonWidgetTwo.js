@@ -9,11 +9,11 @@ import  TablePaginationActions  from './TablePaginationActions';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { LocationContext } from '../../../contexts/LocationContext';
-import styles from './OverviewWidgetTwoStyles';
+import styles from './PersonWidgetTwoStyles';
 
-import EmployeesTable from './EmployeesTable';
+import VisitorsTable from './VisitorsTable';
 
-function OverviewWidgetTwo(props) {
+function PersonWidgetTwo(props) {
       const { classes } = props;
 
       const {isDarkMode} = useContext(ThemeContext);
@@ -21,6 +21,7 @@ function OverviewWidgetTwo(props) {
       const [refresh, setRefresh] = useState(15000);
       const [selectedType,setSelectedType]= useState("all");
       const [employeesDetails, setEmployeesDetails] = useState([{}])
+
 
       const [state, setState] = useState({
         all: 'on',
@@ -39,7 +40,7 @@ function OverviewWidgetTwo(props) {
           }).catch(function (error) {
           console.log(error);
           });  
-      },[selectedType,siteid])
+      },[siteid, selectedType])
 
       function handleChange(event){
         if(event.currentTarget.value === 'on'){
@@ -77,67 +78,13 @@ function OverviewWidgetTwo(props) {
       alignItems='center'
       justify='center'
       >                 
-        <Grid item xs={12} >
-        <Button
-            name="all"
-            variant='contained'
-            color={state.all === 'on' ?  'primary':'secondary'}
-            onClick=  {handleChange}
-            value={state.all}
-            style={{fontSize:'1.5rem',margin:'1vh'}}
-            >
-            All
-        </Button>
-        <Button
-            name="noncompliant"
-            variant='contained'
-            color={state.noncompliant === 'on' ?  'primary':'secondary'}
-            onClick= {handleChange}
-            value={state.noncompliant}
-            style={{fontSize:'1.5rem',margin:'1vh'}}
-            >
-            Non-Compliant
-        </Button>
 
-        </Grid>
-        <Grid item xs={12} >
-        <Button
-            name="lowbattery"
-            variant='contained'
-            color={state.lowbattery === 'on' ?  'primary':'secondary'}
-            onClick= {handleChange}
-            value={state.lowbattery}
-            style={{fontSize:'1.5rem',margin:'1vh'}}
-            >
-            Low Battery
-        </Button>
-        {/* <Button
-            name="atrisk"
-            variant='contained'
-            color={state.atrisk === 'on' ?  'primary':'secondary'}
-            onClick= {handleChange}
-            value={state.atrisk}
-            style={{fontSize:'1.5rem',margin:'1vh'}}
-            >
-            At-Risk
-        </Button> */}
-        <Button
-            name="quarantine"
-            variant='contained'
-            color={state.quarantine === 'on' ?  'primary':'secondary'}
-            onClick= {handleChange}
-            value={state.quarantine}
-            style={{fontSize:'1.5rem',margin:'1vh'}}
-            >
-            Quarantine
-        </Button>
-        </Grid>
         <Grid item xs={12 }>
-          <EmployeesTable rows={employeesDetails}/>
+          <VisitorsTable rows={employeesDetails}/>
         </Grid>
       </Grid>
     </Fragment>
   );
 }
 
-export default connect(null,{TablePaginationActions,getEmployeeList})(withTheme(theme)(withStyles(styles)(OverviewWidgetTwo)))
+export default connect(null,{TablePaginationActions,getEmployeeList})(withTheme(theme)(withStyles(styles)(PersonWidgetTwo)))

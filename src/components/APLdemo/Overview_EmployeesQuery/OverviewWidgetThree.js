@@ -3,7 +3,7 @@ import React, {Fragment,useEffect, useState, useContext } from 'react';
 import { withStyles,withTheme } from '@material-ui/core/styles';
 import theme from '../../../MainTheme.js';
 import {Grid} from '@material-ui/core';
-import {} from '../../../actions/widgetAction';
+import {getEmployeeTracingDetails} from '../../../actions/widgetAction';
 import {connect} from 'react-redux';
 import  TablePaginationActions  from './TablePaginationActions';
 import { ThemeContext } from '../../../contexts/ThemeContext';
@@ -20,34 +20,23 @@ function OverviewWidgetThree(props) {
       const { siteid } = useContext(LocationContext);
       const [refresh, setRefresh] = useState(0);
 
-      const [state, setState] = useState({
-        all: 'on',
-        noncompliant: 'off',
-        lowbattery: 'off',
-        atrisk: 'off',
-        quarantine: 'off',
-      });
 
-      function handleChange(event){
-        if(event.currentTarget.value === 'on'){
-          setState({ ...state, [event.currentTarget.name]: 'off'});
-        }else{
-          setState({ ...state, [event.currentTarget.name]: 'on'});
-        }
-      };
+      useEffect(()=>{
+
+      },[siteid])
 
       function onRefresh(){
 
       }
 
-      // useEffect(() => {        
-      //   if (refresh > 0 ){
-      //     var timerID = setInterval( () => onRefresh(), refresh);
-      //       return function(){
-      //         clearInterval(timerID);
-      //       }; 
-      //   }          
-      // });
+      useEffect(() => {        
+        if (refresh > 0 ){
+          var timerID = setInterval( () => onRefresh(), refresh);
+            return function(){
+              clearInterval(timerID);
+            }; 
+        }          
+      });
 
   return (
     <Fragment>
@@ -56,11 +45,11 @@ function OverviewWidgetThree(props) {
       justify='center'
       >                 
         <Grid item xs={12 }>
-          <EmployeesQueryTable rows={[[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4],[1,2,3,4]]}/>
+          <EmployeesQueryTable/>
         </Grid>
       </Grid>
     </Fragment>
   );
 }
 
-export default connect(null,{TablePaginationActions})(withTheme(theme)(withStyles(styles)(OverviewWidgetThree)))
+export default connect(null,{getEmployeeTracingDetails})(withTheme(theme)(withStyles(styles)(OverviewWidgetThree)))

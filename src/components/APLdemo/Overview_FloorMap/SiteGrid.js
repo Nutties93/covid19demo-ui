@@ -10,14 +10,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { withTheme } from '@material-ui/core/styles';
 import theme from '../../../MainTheme.js';
 // import {getNewsData,getWidgetConfig} from '../../actions/widgetAction';
-
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-
+import styles from "./SiteGridStyles";
 import {Cookies } from 'react-cookie';
-
-const cookies = new Cookies();
+import Alerts from '../Overview_Floormap_Alerts/Alerts';
 
 
 function yuv2rgb(Y, U, V) {
@@ -36,6 +31,7 @@ function rgb2yuv(R, G, B) {
 
 function SiteGrid(props) {
 
+    const {classes} = props;
     const [ selectedlocation, setSelectedlocation ] = useState("NA");
 
     const canvasgrid = useRef(null);
@@ -47,7 +43,7 @@ function SiteGrid(props) {
     var height = 550;
     var row = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19,20];
     var col = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p','q','r','s','t','u','v','w','x','y','z','aa', 'bb', 'cc', 'dd', 'ee'];
-    var coloredsquares = { r2:2, u2:3, w2:4, f17: 15, i18:10,c7:5 }
+    var coloredsquares = { r2:3, u2:0, w2:2, f17: 2, i18:0, c7:1}
     // threshold = 70db
     // levels= [0.3,0.5,0.7]
 
@@ -204,7 +200,7 @@ function SiteGrid(props) {
 
       // context.fillText(selectedcell,mousePos.x+rowsquareheight/2-3, 
       //   mousePos.y + colsquarelength/2-3);
-      if (coloredsquares[selectedcell] !== undefined &&  coloredsquares[selectedcell] <=3){
+      if (coloredsquares[selectedcell] !== undefined &&  coloredsquares[selectedcell] <=2){
         context.fillStyle = 'rgb(' + 155 + ',' + 155 + ',' + 155 + ',0.8)' 
         context.fillRect(mousePos.x-rowsquareheight/2,mousePos.y + (colsquarelength*1), rowsquareheight*2.5, colsquarelength);
 
@@ -214,7 +210,7 @@ function SiteGrid(props) {
         context.fillText(coloredsquares[selectedcell],mousePos.x+rowsquareheight/2-3, 
           mousePos.y + (colsquarelength*1.75));
 
-      } else if (coloredsquares[selectedcell] !== undefined &&  coloredsquares[selectedcell] >3){
+      } else if (coloredsquares[selectedcell] !== undefined &&  coloredsquares[selectedcell] >2){
         context.fillStyle = 'rgb(' + 155 + ',' + 155 + ',' + 155 + ',0.8)' 
         context.fillRect(mousePos.x-rowsquareheight/2,mousePos.y + (colsquarelength*1), rowsquareheight*2.5, colsquarelength);
 
@@ -282,14 +278,14 @@ function SiteGrid(props) {
             style={{height:'100%',padding:'5px'}}
             spacing={1}> 
               <Grid item xs={12}>
-                <Card style={{backgroundColor:'#e9e9e9', height: '65vh'}}>
+                <Card className={classes.card}style={{backgroundColor:'#e9e9e9'}}>
                     <CardContent>
                       <Grid container   
                       justify="center"
                       alignItems="center"
                       spacing={0}> 
-                        <Grid item xs={12}>
-                        <Typography variant="h4" style={{textAlign:'center',color:'black'}}>  Selected Location: <b>  {selectedlocation} </b></Typography>
+                        <Grid item xs={12} md={8}>
+                        {/* <Typography variant="h4" style={{textAlign:'center',color:'black'}}>  Selected Location: <b>  {selectedlocation} </b></Typography> */}
                           <div style={{ position: "relative", height: height+80, overflow:'scroll'}} >
                               <img width={width} height={height} src={require('../../../images/floormapnew.png')} style={{
                                 position: "absolute", left: 0,
@@ -315,7 +311,9 @@ function SiteGrid(props) {
                                         }} />
                           </div>
                         </Grid>
-                        {/* <Grid item xs={4}></Grid> */}
+                        <Grid item xs={12} md={4}>
+                          <Alerts/>
+                        </Grid>
                       </Grid>
                     </CardContent>
                   </Card>
@@ -326,4 +324,4 @@ function SiteGrid(props) {
 }
 
 //Import Dependencies here! For higher order components, wrap here!
-export default SiteGrid;
+export default withTheme(theme)(withStyles(styles)(SiteGrid));

@@ -60,7 +60,18 @@ function LoginUI(props) {
   useEffect(()=>{
     setIsInvalid(false);
     setValidMessage('');
-    if(password.length <= 7){
+
+    if(password.length === 0 && username.length === 0){
+      setIsInvalid(true);
+      // console.error('Err::: Length validation failed');
+      setValidMessage('Please enter username and password!');
+    }    
+    else if(password.length === 0){
+      setIsInvalid(true);
+      // console.error('Err::: Length validation failed');
+      setValidMessage('Please enter password!');
+    }    
+    else if(password.length <= 7){
         setIsInvalid(true);
         // console.error('Err::: Length validation failed');
         setValidMessage('Length validation failed');
@@ -94,9 +105,11 @@ function LoginUI(props) {
       setisLoading(true);      
       props.userLoginRequest({username, password}).then(function (response) {
       var respcode = response.data['respcode'];
-      if(respcode ===1200){
+      if(respcode ===1200||1201){
         //If login successful, store user token
-        const usrtoken = response.data['token'];
+
+        // const usrtoken = response.data['token'];
+        const usrtoken = "NOTOKENS FOR NOW";
         //remove commented code before deployment - need to test if works during deployment 
         setCookie('usrtoken', usrtoken, { /*httpOnly: true,secure: true,*/maxAge: 360000, sameSite:true });
         setAuthToken(usrtoken);

@@ -34,7 +34,7 @@ function Account(props) {
           cookies.remove('usrtoken');
           cookies.remove('username');
           setAuthToken(false);
-          history.push('/');        
+          history.push('/Login');        
         })
         .catch(function (error) {
           console.log(error);

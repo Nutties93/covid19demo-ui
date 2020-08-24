@@ -63,7 +63,7 @@ function CSSGrid(props) {
                       setView(newValue);
                     }}
                     showLabels
-                    style={{backgroundColor: theme.palette.common.lightgrey}}
+                    style={{backgroundColor: theme.palette.common.lightgrey, height:'7vh'}}
                   >
                     <BottomNavigationAction  label="FloorMap" icon={<FiberManualRecordIcon />}/>
                     <BottomNavigationAction  label="People" icon={<FiberManualRecordIcon />} />

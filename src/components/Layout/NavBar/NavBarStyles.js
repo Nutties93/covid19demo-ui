@@ -69,23 +69,17 @@ const styles = theme => ({
   },
 
   sideBarImg:{
-    [theme.breakpoints.up('sm')] : {
-        width: '8vw', 
-        marginLeft: '2vw',
-        marginRight: '0vh',
-        marginTop: '2vh'
+    [theme.breakpoints.up('md')] : {
+      width: '8vw', 
+    },
+    [theme.breakpoints.down('md')] : {
+        width: '14vw', 
     },
     [theme.breakpoints.down('sm')] : {
       width: '18vh', 
-      marginLeft: '3vh',
-      marginRight: '0vh',
-      marginTop: '2.5vh'
     },
     [theme.breakpoints.down('xs')] : {
         width: '15vh', 
-        marginLeft: '4vh',
-        marginRight: '0vh',
-        marginTop: '2vh'
     }
   },
   navBarImg:{

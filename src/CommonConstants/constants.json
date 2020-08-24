@@ -2,7 +2,7 @@
     "googleURL": "https://maps.googleapis.com/maps/api/js?key=AIzaSyBdaY5MsNYxVcTKlFhh1B33ILaE5ElHlk8",
     "procTheHive": "https://proc.thehive.info/ui/#!/1" ,
     "weatherWidget": "https://weatherwidget.io/js/widget.min.js",
-    "apiURL": "https://iotaas-psa-demo-api-app.azurewebsites.net/",    
+    "apiURL": "https://actitlitydemo-api.azurewebsites.net/",    
     "forecast": "https://forecast7.com/en/n37d86144d77/laverton/"
 }
 

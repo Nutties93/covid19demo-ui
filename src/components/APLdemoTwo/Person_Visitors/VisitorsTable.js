@@ -8,7 +8,7 @@ import {Grid,Table,TableBody,TableCell,TablePagination,TableRow,TableHead,Button
 import {connect} from "react-redux";
 import  TablePaginationActions  from './TablePaginationActions';
 import { ThemeContext } from "../../../contexts/ThemeContext";
-import styles from "./EmployeesTableStyles";
+import styles from "./VisitorsTableStyles";
 import { LocationContext } from "../../../contexts/LocationContext";
 
 import { CSVLink, CSVDownload } from "react-csv";
@@ -16,15 +16,18 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import CachedIcon from '@material-ui/icons/Cached';
 
-function EmployeesTable(props) {
+import { VisitorContext } from '../../../contexts/VisitorContext';
+
+function VisitorsTable(props) {
       const { classes } = props;
 
       const [page, setPage] = useState(0);
-      const [rowsPerPage, setRowsPerPage] = useState(8);   //5
+      const [rowsPerPage, setRowsPerPage] = useState(10);   //5
       const {isDarkMode} = useContext(ThemeContext);      
       const [emptyRows,setEmptyRows] = useState(0);
       const [refresh, setRefresh] = useState(0);
 
+      const {visitor, handleClickButton  } = useContext(VisitorContext);
 
       function handleChangePage(event, newPage) {
         setPage(newPage);
@@ -61,27 +64,26 @@ function EmployeesTable(props) {
                 justify='center' 
                 spacing={8} >
                 <Grid item xs={12}>
+                  <Button
+                  name="visitorName"
+                  value={row.employeeName}
+                  onClick={(evt) => handleClickButton(evt,row.temperature)}>
                       <Typography                    
                       variant="h5"   
                       style={{textAlign: 'center', color:'black', fontWeight:'400'}} gutterBottom
                       >
                           {row.employeeName}
-                      </Typography>
-                      <Typography                    
-                      variant="h5" 
-                      style={{textAlign: 'center', color:'black', fontWeight:'400'}}
-                      gutterBottom >
-                          {row.departmentName}
-                      </Typography>       
+                      </Typography> 
+                  </Button>     
                   </Grid>
                 </Grid>
             </TableCell>
-            
+
             <TableCell align="center" component="th" scope="row"
             className={isDarkMode ? classes.tablecellDark : classes.tablecell}>
               <IconButton
                   className= {(row.latestTimestamp ==="") ?  classes.darkgrey : (new Date() - new Date(row.latestTimestamp) < 7200000)                    
-                  ?  classes.blue : classes.darkgrey  }     
+                    ?  classes.blue : classes.darkgrey  }    
                   style={{padding:'0'}}
                   // aria-owns={open ? 'mouse-over-popover' : undefined}
                   aria-haspopup="true"
@@ -93,7 +95,7 @@ function EmployeesTable(props) {
             <TableCell align="center" component="th" scope="row"
             className={isDarkMode ? classes.tablecellDark : classes.tablecell}>
               <IconButton         
-                  className= {(row.noncompliance) ? classes.orange : classes.darkgrey }         
+                  className= {(index === 3) ? classes.orange : classes.darkgrey }         
                   style={{padding:'0'}}
                   // aria-owns={open ? 'mouse-over-popover' : undefined}
                   aria-haspopup="true"
@@ -125,7 +127,6 @@ function EmployeesTable(props) {
             
             
             }
-
           </TableRow>
         ))
         )
@@ -187,4 +188,4 @@ function EmployeesTable(props) {
   );
 }
 
-export default connect(null,{TablePaginationActions})(withTheme(theme)(withStyles(styles)(EmployeesTable)))
+export default connect(null,{TablePaginationActions})(withTheme(theme)(withStyles(styles)(VisitorsTable)))

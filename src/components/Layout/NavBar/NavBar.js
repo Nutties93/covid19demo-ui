@@ -25,7 +25,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import Clock from './Clock';
 import history from '../../../history';
 import { Cookies } from 'react-cookie';
-import {getYardId} from '../../../actions/widgetAction';
+import {getYardId,getAllSites} from '../../../actions/widgetAction';
 import {connect} from 'react-redux';
 import setAuthToken from '../../../actions/setAuthToken';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -33,7 +33,7 @@ import theme from "../../../MainTheme.js"
 
 function Navbar(props) {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
-  const { yardid, changeLocation } = useContext(LocationContext);
+  const { siteid, changeLocation } = useContext(LocationContext);
   const { classes } = props;
   const [siteidlist, setSiteidlist] = useState([]);
   const cookies = new Cookies();
@@ -99,17 +99,22 @@ function Navbar(props) {
   const toggleDrawer = (side, open) => () => {
     setState({ ...state, [side]: open });
   };
-    useEffect(()=>{
+  useEffect(()=>{
     highlighttabs();
     if(siteidlist.length===0){
       const cookies = new Cookies();
-      if(cookies.get('username')){
-      props.getYardId({}).then(function (response){
-        setSiteidlist(response.data.yards);
-      }).catch(function (error){
-        console.log(error);
-      });
-    }
+    //   if(cookies.get('username')){
+    //   props.getYardId({}).then(function (response){
+    //     setSiteidlist(response.data.yards);
+    //   }).catch(function (error){
+    //     console.log(error);
+    //   });
+    // }
+    props.getAllSites({}).then(function (response){
+      setSiteidlist(response.data.sites);
+    }).catch(function (error){
+      console.log(error);
+    });
   }
   })
 
@@ -125,7 +130,7 @@ function Navbar(props) {
             <MenuItem button selected={manageauth} className={classes.fullList} onClick={navManageUsers} 
             classes={{
               selected : classes.fullListActive}}>
-              Manage Users</MenuItem>
+              Manage Visitors</MenuItem>
             <Divider />
             {/* {true && <MenuItem button disabled={false} selected={adminauth} className={classes.fullList} onClick={navAdmin} 
             classes={{
@@ -151,18 +156,21 @@ function Navbar(props) {
      {/* color={isDarkMode ? 'primary'  : 'secondary'} */}
       <AppBar position='static' >
         <Toolbar className={classes.toolbar}>          
-          { cookies.get('username') && <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)}  aria-label='Menu'> 
+          {/* { cookies.get('username') && <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)}  aria-label='Menu'> 
            <MenuIcon/>
-          </IconButton>}
+          </IconButton>} */}
+          <IconButton className={classes.menuButton} onClick={toggleDrawer('left', true)}  aria-label='Menu'> 
+           <MenuIcon/>
+          </IconButton>
               <span><img className = {classes.navBarImg} alt={'Logo for Navbar'}src={ require('../../../images/orange.png')}/></span>
           <Typography className={classes.title} variant='h4'>
-            Orange IoTaas Platform - Demo Version
+            Connected Sites - Demo Version
           </Typography>
 
 
-         { cookies.get('username') && <Select 
+          <Select 
           className={classes.menuItem} 
-          value={yardid} 
+          value={siteid} 
           onChange={changeLocation}
           MenuProps={{
             getContentAnchorEl: null,
@@ -179,9 +187,9 @@ function Navbar(props) {
             {siteidlist.map(element =>{
               return ( <MenuItem 
                className= {classes.menuItemDisplay} 
-               value={element.yardId}
-               key = {element.yardId} disabled>{element.yardName}</MenuItem>)})}
-          </Select>}
+               value={element.siteid}
+               key = {element.siteid} >{element.sitename}</MenuItem>)})}
+          </Select>
 
 
           <div className={classes.grow} />
@@ -194,7 +202,10 @@ function Navbar(props) {
               elevation={0}>
             <Paper style={isDarkMode ?  
             {backgroundColor: '#e9e9e9',height:'100vh'}: {backgroundColor: '#1565c0',height:'100vh'} }>
-              <img className={classes.sideBarImg} alt={'drawerlogo'} src={ require('../../../images/orange.png')}/>
+              <div style={{  display: 'flex', justifyContent:'center'}}>
+                <img className={classes.sideBarImg} alt={'drawerlogo'} src={ require('../../../images/orange.png')}/>
+              </div>
+
               <div
                 tabIndex={0}
                 role='button'
@@ -260,5 +271,5 @@ function Navbar(props) {
     </div>
   );
 }
-export default connect(null,{getYardId, userLogoutRequest})((withStyles(styles)(Navbar)));
+export default connect(null,{getYardId, userLogoutRequest,getAllSites})((withStyles(styles)(Navbar)));
 
